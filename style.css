@@ -2,7 +2,17 @@
 
 .theme-dark {
     --bg: hsl(207, 26%, 17%);
+    --element-bg: hsl(209, 23%, 22%);
     --text-color: hsl(0, 0%, 100%);
+}
+
+.theme-light {
+    --bg: hsl(0, 0%, 98%);
+    --element-bg: hsl(209, 23%, 22%);
+    --text-color: hsl(0, 0%, 100%);
+    --mode-text: hsl(200, 15%, 8%);
+    --input-color: hsl(0, 0%, 52%);
+    --elements-color: hsl(0, 0%, 100%);
 }
 
 * {
@@ -10,6 +20,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Nunito Sans', sans-serif;
+    font-size: 16px;
 }
 
 body {
@@ -17,6 +28,9 @@ body {
     color: var(--text-color);
 }
 
+h1 {
+    font-size: 1.5em;
+}
 .container {
     margin: 0 auto;
     height: auto;
@@ -27,7 +41,10 @@ body {
 }
 
 .header-container {
+    width: 1440px;
     align-items: center;
+    position: sticky;
+    padding: 1.5em 0;
 }
 
 .header-container > h1:first-child {
@@ -36,5 +53,79 @@ body {
 
 .main-container {
     width: 1440px;
+    padding: 4rem 0;
 }
 
+.main-header {
+    background-color: var(--element-bg);
+}
+
+.current-theme {
+    padding-left: 0.3em;
+}
+
+.filter-container {
+    background-color: var(--element-bg);
+    padding: 1em 0.3em 1em 1.3em;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+}
+
+.filter-container .form-element {
+    border: none;
+    outline: none;
+    color: var(--text-color);
+    background-color: transparent;
+}
+
+.search-country {
+    width: 30em;
+    margin-left: 1em;
+}
+
+.search-country::placeholder{
+    color: var(--input-color);
+}
+
+.filter-region-container {
+    color: var(--input-color);
+    margin-left: auto;
+}
+
+.filter-by-region {
+    width: 13em;
+}
+
+.country-item {
+    background-color: var(--element-bg);
+}
+
+img.country-flag {
+    height: 400px;
+    width: auto;
+}
+
+.country-information {
+    padding: 1.5em 1em;
+}
+
+.country-name-container {
+    padding: 1em 0;
+}
+
+.country-name {
+    font-weight: 800;
+}
+
+.country-label {
+    font-weight: 600;
+}
+
+.country-info {
+    font-weight: 300;
+}
+
+.country-container {
+    padding: 3em 0;
+}
