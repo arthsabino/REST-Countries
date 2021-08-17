@@ -28,35 +28,23 @@
                 
                 <select id="filter_by_region" class="filter-by-region filter-region-container filter-container form-element" name="filter-by-region">
                     <option value="" selected hidden disabled>Filter by Region</option>
-                    <option value="">Test</option>
-                    <option value="">Test</option>
-                    <option value="">Test</option>
-                    <option value="">Test</option>
-                    <option value="">Test</option>
                 </select>
             </div>
-            <div class="flex-container country-container">
-                <div class="card country-item">
-                    <div class="card-header">
-                        <img class="country-flag" src="" alt="">
-                    </div>
-                    <div class="card-body country-information">
-                        <div class="country-name-container">
-                            <span class="country-name">Germany</span>
-                        </div>
-                        <div class="flex-container country-population-container">
-                            <span class="country-label">Population:</span>
-                            <span class="country-info country-population"></span>
-                        </div>
-                        <div class="flex-container country-region-container">
-                            <span class="country-label">Region:</span>
-                            <span class="country-info country-region"></span>
-                        </div>
-                        <div class="flex-container country-capital-container">
-                            <span class="country-label">Capital:</span>
-                            <span class="country-info country-capital"></span>
-                        </div>
-                    </div>
+            <div class="flex-container country-container"></div>
+        </div>
+        <div id="country_modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">    
+                    <button class="btn btn-black modal-close">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Back</span>
+                    </button>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button class="btn btn-black modal-close">
+                        <span>Close</span>
+                    </button>
                 </div>
             </div>
         </div>

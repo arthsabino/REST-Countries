@@ -56,6 +56,21 @@ h1 {
     padding: 4rem 0;
 }
 
+.btn {
+    border: none;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.btn-black {
+    background-color: var(--element-bg);
+    border-radius: 10px;
+    min-width: 145px;
+    padding: 1em 3em;
+    margin: 1em;
+    color: var(--text-color);
+}
+
 .main-header {
     background-color: var(--element-bg);
 }
@@ -88,6 +103,10 @@ h1 {
     color: var(--input-color);
 }
 
+.search-icon {
+    cursor: pointer;
+}
+
 .filter-region-container {
     color: var(--input-color);
     margin-left: auto;
@@ -97,19 +116,32 @@ h1 {
     width: 13em;
 }
 
+.country-container {
+    flex-wrap: wrap;
+    padding: 3em 0;
+    justify-content: space-between;
+}
 .country-item {
+    cursor: pointer;
     background-color: var(--element-bg);
+    margin: 2em 1em;
 }
 
 img.country-flag {
-    height: 400px;
-    width: auto;
+    height: auto;
+    width: 300px;
 }
 
 .country-information {
-    padding: 1.5em 1em;
+    padding: 0 1em 4em;
 }
 
+.other-information-container > div {
+    padding: 0.3em 0;
+}
+.other-information-container {
+    padding: 0.5em 0;
+}
 .country-name-container {
     padding: 1em 0;
 }
@@ -126,6 +158,55 @@ img.country-flag {
     font-weight: 300;
 }
 
-.country-container {
-    padding: 3em 0;
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal h2 {
+    color: var(--text-color);
+    font-size: 1.3em;
+    line-height: 2;
+}
+
+.modal-header {
+    padding: 1em 0 4em;
+}
+
+.modal-content {
+    background-color: var(--bg);
+    border-radius: 10px;
+    margin: 3% auto;
+    padding: 20px;
+    width: 70%;
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 5px 8px 0 rgba(0, 0, 0, 0.17);
+}
+
+.modal-content img.country-flag {
+    width: 100%;;
+}
+
+.modal-footer{
+    padding: 2em 0;
+    border-top: 1px solid var(--text-color);
+}
+
+button.modal-close:hover,
+button.modal-close:focus {
+    opacity: 90%;
+}
+
+.border-countries-button-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 1.5em;
+    justify-content: space-between;
 }
