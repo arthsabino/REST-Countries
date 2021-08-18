@@ -12,6 +12,7 @@ async function ready() {
     let searchIcon = document.getElementsByClassName('search-icon')[0]
     let filterRegionSelectElement = document.getElementById('filter_by_region')
     let searchCountryInputElement = document.getElementsByClassName('search-country')[0]
+    let modeContainerElement = document.getElementsByClassName('mode-container')[0]
     for(let i = 0; i < closeModalButton.length; i++) {
         let button = closeModalButton[i]
         button.addEventListener('click', closeModal)
@@ -19,6 +20,7 @@ async function ready() {
     searchIcon.addEventListener('click', searchCountry)
     searchCountryInputElement.addEventListener('input', searchCountryInput);
     filterRegionSelectElement.addEventListener('change', filterRegionChange)
+    modeContainerElement.addEventListener('click', modeContainerClick)
     displayCountries(countries);
     displayRegions(regions);
 }
@@ -204,6 +206,27 @@ async function countryItemClicked(event) {
     borderCountries.forEach((buttonElement) => { countryElement.getElementsByClassName('border-countries-button-container')[0].append(buttonElement) })
     modalElement.getElementsByClassName('modal-body')[0].appendChild(countryElement)
     displayModal(modalElement)
+}
+
+function modeContainerClick(event) {
+    
+}
+
+function setTheme(themeName) {
+    localStorage.setItem('theme', themeName);
+    document.documentElement.className = themeName;
+    let themeButtons = document.getElementsByClassName('btn-theme')
+    removeActiveButton(themeButtons)
+    let button = document.querySelector(`.btn-theme[data-value="${themeName.replace(/[^0-9]/g, '')}"]`)
+    button.classList.add('btn-active')
+}
+
+function toggleTheme() {
+    if (localStorage.getItem('theme') === 'theme-light') {
+        setTheme('theme-light');
+    } else {
+        setTheme('theme-light');
+    }
 }
 
 function displayModal(modal) {

@@ -7,9 +7,9 @@
 }
 
 .theme-light {
-    --bg: hsl(0, 0%, 98%);
-    --element-bg: hsl(209, 23%, 22%);
-    --text-color: hsl(0, 0%, 100%);
+    --bg: hsl(0, 0%, 95%);
+    --element-bg: hsl(0, 0%, 100%);
+    --text-color: hsl(200, 15%, 8%);
     --mode-text: hsl(200, 15%, 8%);
     --input-color: hsl(0, 0%, 52%);
     --elements-color: hsl(0, 0%, 100%);
@@ -34,6 +34,7 @@ h1 {
 .container {
     margin: 0 auto;
     height: auto;
+    width: 1440px;
 }
 
 .flex-container {
@@ -41,7 +42,6 @@ h1 {
 }
 
 .header-container {
-    width: 1440px;
     align-items: center;
     position: sticky;
     padding: 1.5em 0;
@@ -51,8 +51,11 @@ h1 {
     flex-grow: 1;
 }
 
+.mode-container {
+    cursor: pointer;
+}
+
 .main-container {
-    width: 1440px;
     padding: 4rem 0;
 }
 
@@ -82,6 +85,7 @@ h1 {
 .filter-container {
     background-color: var(--element-bg);
     padding: 1em 0.3em 1em 1.3em;
+    margin: 1em;
     border: none;
     outline: none;
     border-radius: 10px;
@@ -95,7 +99,6 @@ h1 {
 }
 
 .search-country {
-    width: 30em;
     margin-left: 1em;
 }
 
@@ -206,7 +209,31 @@ button.modal-close:focus {
 
 .border-countries-button-container {
     display: flex;
-    flex-wrap: wrap;
     padding-top: 1.5em;
     justify-content: space-between;
 }
+
+@media only screen and (max-width: 1440px) {
+    .container{
+        width: 950px;
+    }
+}
+
+@media only screen and (max-width: 950px) {
+    .container{
+        width: 450px;
+    }
+}
+@media only screen and (max-width: 375px) {
+    .container{
+        width: 350px;
+    }
+    .flex-container {
+        flex-wrap: wrap;
+    }
+
+    .filter-region-container {
+        margin-left: 1em;
+    }
+}
+
