@@ -74,6 +74,15 @@ h1 {
     color: var(--text-color);
 }
 
+.btn-primary {
+    background-color: #007bff;
+    border-radius: 10px;
+    min-width: 145px;
+    padding: 1em 3em;
+    margin: 1em;
+    color: white;
+}
+
 .main-header {
     background-color: var(--element-bg);
 }

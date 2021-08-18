@@ -9,7 +9,7 @@ async function ready() {
     const regions = await getRegions();
     let modalElement = document.getElementById('country_modal')
     let closeModalButton = modalElement.getElementsByClassName('modal-close')
-    let searchIcon = document.getElementsByClassName('search-icon')[0]
+    let searchButton = document.getElementsByClassName('btn-search')[0]
     let filterRegionSelectElement = document.getElementById('filter_by_region')
     let searchCountryInputElement = document.getElementsByClassName('search-country')[0]
     let modeContainerElement = document.getElementsByClassName('mode-container')[0]
@@ -17,12 +17,18 @@ async function ready() {
         let button = closeModalButton[i]
         button.addEventListener('click', closeModal)
     }
-    searchIcon.addEventListener('click', searchCountry)
+    searchButton.addEventListener('click', searchCountry)
     searchCountryInputElement.addEventListener('input', searchCountryInput);
     filterRegionSelectElement.addEventListener('change', filterRegionChange)
     modeContainerElement.addEventListener('click', modeContainerClick)
     displayCountries(countries);
     displayRegions(regions);
+
+    if (localStorage.getItem('theme') === 'theme-light') {
+        setTheme('theme-light');
+    } else {
+        setTheme('theme-dark');
+    }
 }
 
 async function getCountries() {
@@ -66,10 +72,15 @@ async function searchCountryInput(event) {
 
 async function searchCountry() {
     let inputValue = document.getElementsByClassName('search-country')[0].value
-    clearDisplayCountries()
-    let country = await getCountry(inputValue);
-    let countries = [country]
-    displayCountries(countries)
+    if(inputValue === null || inputValue === ''){
+        alert('No search value');
+        return;
+    } else {
+        clearDisplayCountries()
+        let country = await getCountry(inputValue);
+        let countries = [country]
+        displayCountries(countries)
+    }
 
 }
 
@@ -209,23 +220,21 @@ async function countryItemClicked(event) {
 }
 
 function modeContainerClick(event) {
+    if(document.documentElement.classList.contains('theme-dark')) setTheme('theme-light');
+    else setTheme('theme-dark')
     
 }
 
 function setTheme(themeName) {
     localStorage.setItem('theme', themeName);
     document.documentElement.className = themeName;
-    let themeButtons = document.getElementsByClassName('btn-theme')
-    removeActiveButton(themeButtons)
-    let button = document.querySelector(`.btn-theme[data-value="${themeName.replace(/[^0-9]/g, '')}"]`)
-    button.classList.add('btn-active')
 }
 
 function toggleTheme() {
     if (localStorage.getItem('theme') === 'theme-light') {
         setTheme('theme-light');
     } else {
-        setTheme('theme-light');
+        setTheme('theme-dark');
     }
 }
 
