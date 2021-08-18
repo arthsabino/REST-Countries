@@ -11,11 +11,13 @@ async function ready() {
     let closeModalButton = modalElement.getElementsByClassName('modal-close')
     let searchIcon = document.getElementsByClassName('search-icon')[0]
     let filterRegionSelectElement = document.getElementById('filter_by_region')
+    let searchCountryInputElement = document.getElementsByClassName('search-country')[0]
     for(let i = 0; i < closeModalButton.length; i++) {
         let button = closeModalButton[i]
         button.addEventListener('click', closeModal)
     }
     searchIcon.addEventListener('click', searchCountry)
+    searchCountryInputElement.addEventListener('input', searchCountryInput);
     filterRegionSelectElement.addEventListener('change', filterRegionChange)
     displayCountries(countries);
     displayRegions(regions);
@@ -49,6 +51,15 @@ async function getCountry(name) {
     const response = await fetch(`https://restcountries.eu/rest/v2/name/${name}?fullText=true`, { method: 'GET' });
     const country =  await response.json()
     return country[0];
+}
+
+async function searchCountryInput(event) {
+    let element = event.target;
+    console.log(element.value)
+    if(element.value === null || element.value === ''){
+        let countries = await getCountries();
+        displayCountries(countries)
+    }
 }
 
 async function searchCountry() {
