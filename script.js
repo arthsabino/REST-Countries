@@ -96,7 +96,6 @@ function btnPageClicked(event) {
     const btnPages = document.getElementsByClassName('btn-pages')
     removeClassName(btnPages, 'active')
     element.classList.add('active')
-    console.log(element.classList)
     state.page = value;
     setPagination(countries, state.page, state.count)
     displayCountries(countries);
@@ -208,13 +207,22 @@ function displayRegions(regions) {
         filterRegionSelectElement.appendChild(regionOption)
     })
 }
+function displayLoader() {
+    let loader = document.getElementsByClassName('loader')[0]
+    loader.style.display = 'block'
+}
 
+function hideLoader() {
+    let loader = document.getElementsByClassName('loader')[0]
+    loader.style.display = 'none'
+}
 async function countryItemClicked(event) {
     let element = event.target
     let countryItem = element.closest('.country-item')
     let modalElement = document.getElementById('country_modal')
+    displayLoader()
     let country = await getCountry(countryItem.dataset.countryName)
-    
+    hideLoader()
     let countryElement = document.createElement('div')
     const currencies = country.currencies.map((currency) => {
         return currency.name
@@ -225,7 +233,7 @@ async function countryItemClicked(event) {
     
     const borderCountries = country.borders.map( (borderCountry) => {
         let buttonElement = document.createElement('button')
-        buttonElement.classList.add('btn', 'btn-black', 'btn-border-country')
+        buttonElement.classList.add('btn', 'btn-border-country')
         buttonElement.innerHTML = borderCountry
         return buttonElement
     })
