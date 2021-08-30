@@ -4,8 +4,16 @@ if(document.readyState === 'loading') {
     ready()
 }
 
+var state = {
+    'dataSet' : [],
+    'page' : 1,
+    'count' : 12,
+    'window' : 5
+}
+var pages;
+var countries;
 async function ready() {
-    const countries = await getCountries();
+    countries = await getCountries();
     const regions = await getRegions();
     let modalElement = document.getElementById('country_modal')
     let closeModalButton = modalElement.getElementsByClassName('modal-close')
@@ -13,6 +21,7 @@ async function ready() {
     let filterRegionSelectElement = document.getElementById('filter_by_region')
     let searchCountryInputElement = document.getElementsByClassName('search-country')[0]
     let modeContainerElement = document.getElementsByClassName('mode-container')[0]
+
     for(let i = 0; i < closeModalButton.length; i++) {
         let button = closeModalButton[i]
         button.addEventListener('click', closeModal)
@@ -20,8 +29,10 @@ async function ready() {
     searchButton.addEventListener('click', searchCountry)
     searchCountryInputElement.addEventListener('input', searchCountryInput);
     filterRegionSelectElement.addEventListener('change', filterRegionChange)
-    modeContainerElement.addEventListener('click', modeContainerClick)
-    displayCountries(countries);
+    modeContainerElement.addEventListener('click', modeContainerClick);
+
+    
+    updateDisplayCountries()
     displayRegions(regions);
 
     if (localStorage.getItem('theme') === 'theme-light') {
@@ -31,10 +42,71 @@ async function ready() {
     }
 }
 
+
+function setPagination(dataset, page, count) {
+    let trimStart = (page - 1) * count;
+    let trimEnd = trimStart + count;
+    let paginatedData = dataset.slice(trimStart, trimEnd)
+    let totalPages = Math.ceil(dataset.length / count)
+
+    state.dataSet = paginatedData;
+    pages = totalPages;
+}
+
+function updateDisplayCountries() {
+    setPagination(countries, state.page, state.count)
+    displayPageButtons(pages);
+    displayCountries(countries);
+}
+
+function displayPageButtons(pages) {
+    const paginationContainer = document.getElementsByClassName('pagination-container')[0]
+    paginationContainer.innerHTML = ''
+
+    let maxLeft = (state.page - Math.floor(state.window/2))
+    let maxRight = (state.page + Math.floor(state.window/2))
+
+    if(maxLeft < 1) {
+        maxLeft = 1
+        maxRight = state.window
+    }
+
+    if(maxRight > pages) {
+        maxLeft = pages - (state.window - 1)
+        maxRight = pages
+        if(maxLeft < 1) maxLeft = 1
+    }
+
+    for(let i = maxLeft; i <= maxRight; i++) paginationContainer.innerHTML += `<button type="button" class="btn btn-pages" value="${i}">${i}</button>`
+    if(state.page != 1) paginationContainer.innerHTML = `<button type="button" class="btn btn-pages" value="${1}">&#171; First</button> ${paginationContainer.innerHTML}`
+    if(state.page != pages) paginationContainer.innerHTML += `<button type="button" class="btn btn-pages" value="${pages}">Last &#187;</button>`
+    let btnPages = document.getElementsByClassName('btn-pages')
+    for (let i = 0; i < btnPages.length; i++) {
+        let element = btnPages[i];
+        element.addEventListener('click', btnPageClicked)
+    }
+
+    state.page = 1
+    
+}
+
+function btnPageClicked(event) {
+    const element = event.target
+    const value = event.target.value;
+    const btnPages = document.getElementsByClassName('btn-pages')
+    removeClassName(btnPages, 'active')
+    element.classList.add('active')
+    console.log(element.classList)
+    state.page = value;
+    setPagination(countries, state.page, state.count)
+    displayCountries(countries);
+
+}
+
 async function getCountries() {
     const response = await fetch('https://restcountries.eu/rest/v2/all?fields=flag;name;population;region;capital', { method: 'GET' });
-    const countries =  await response.json()
-    return countries;
+    const _countries =  await response.json()
+    return _countries;
 }
 
 async function getRegions() {
@@ -50,8 +122,8 @@ async function getRegions() {
 
 async function getCountriesByRegions(region) {
     const response = await fetch(`https://restcountries.eu/rest/v2/region/${region}`, { method: 'GET' });
-    const countries =  await response.json()
-    return countries;
+    const _countries =  await response.json()
+    return _countries;
 
 }
 
@@ -63,10 +135,9 @@ async function getCountry(name) {
 
 async function searchCountryInput(event) {
     let element = event.target;
-    console.log(element.value)
     if(element.value === null || element.value === ''){
-        let countries = await getCountries();
-        displayCountries(countries)
+        countries = await getCountries();
+        updateDisplayCountries()
     }
 }
 
@@ -78,8 +149,8 @@ async function searchCountry() {
     } else {
         clearDisplayCountries()
         let country = await getCountry(inputValue);
-        let countries = [country]
-        displayCountries(countries)
+        countries = [country]
+        updateDisplayCountries()
     }
 
 }
@@ -87,16 +158,14 @@ async function searchCountry() {
 async function filterRegionChange(event) {
     let element = event.target
     let region = element.value
-    let countries = await getCountriesByRegions(region)
-    
-    displayCountries(countries)
-
+    countries = await getCountriesByRegions(region)
+    updateDisplayCountries()
 }
 
 function displayCountries(countries) {
     let countryContainer = document.getElementsByClassName('country-container')[0]
     clearDisplayCountries()
-    countries.forEach(country => {
+    state.dataSet.forEach(country => {
         let countryItem = document.createElement('div');
         countryItem.classList.add('card', 'country-item')
         countryItem.dataset.countryName = country.name
@@ -258,4 +327,11 @@ function closeModal(event) {
 function clearDisplayCountries() {
     let countryContainer = document.getElementsByClassName('country-container')[0]
     countryContainer.innerHTML = ''
+}
+
+function removeClassName(elements, className) {
+    for(let i = 0; i < elements.length; i++) {
+        let button = elements[i]
+        button.classList.remove(className)
+    }
 }

@@ -59,6 +59,11 @@ h1 {
     padding: 4rem 0;
 }
 
+.pagination-container {
+    width: 650px;
+    text-align: center;
+}
+
 .btn {
     border: none;
     vertical-align: middle;
@@ -81,6 +86,21 @@ h1 {
     padding: 1em 3em;
     margin: 1em;
     color: white;
+}
+
+.btn-pages {
+    background-color: #0dc6d3;
+    border-radius: 20px;
+    color: white;
+    padding: 0.5em;
+    min-width: 1em;
+    margin: 0.2em;
+
+}
+
+.btn-pages:hover,
+.btn-pages.active {
+    opacity: 0.7;
 }
 
 .main-header {
@@ -134,6 +154,7 @@ h1 {
     justify-content: space-between;
 }
 .country-item {
+    width: 300px;
     cursor: pointer;
     background-color: var(--element-bg);
     margin: 2em 1em;
